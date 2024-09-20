@@ -1,0 +1,33 @@
+app:
+  address: 0x0
+  end_address: 0xeb000
+  size: 0xeb000
+  region: flash_primary
+
+reserved_storage:
+  address: 0xeb000
+  end_address: 0xec000
+  region: flash_primary
+  size: 0x1000
+settings_storage:
+  address: 0xec000
+  end_address: 0xf0000
+  size: 0x4000
+  region: flash_primary
+
+littlefs_storage:
+  address: 0xf0000
+  end_address: 0xf9000
+  size: 0x9000
+  region: flash_primary  
+
+sidewalk_storage:
+  address: 0xf9000
+  end_address: 0xff000
+  region: flash_primary
+  size: 0x6000
+mfg_storage:
+  address: 0xff000
+  end_address: 0x100000
+  region: flash_primary
+  size: 0x1000

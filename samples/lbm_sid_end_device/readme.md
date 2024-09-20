@@ -20,4 +20,4 @@ only for LR1110 and LR1120, not for LR1121
 ## NAV3 on LBM build
 only for LR1110 and LR1120, not for LR1121
 lorawan credentials are declared in ``example_options.h``  
-``west build -b nrf52840dk_nrf52840 -- -DOVERLAY_CONFIG=overlay-lbm-nav3lbm.conf``
+``west build -b nrf52840dk_nrf52840 -- -DOVERLAY_CONFIG=overlay-nav3lbm.conf``

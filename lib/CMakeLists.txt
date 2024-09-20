@@ -24,8 +24,23 @@ if(CONFIG_RADIO_LR11XX)
         lr11xx_driver/src/lr11xx_bootloader.c
         lr11xx_driver/src/lr11xx_gnss.c
         lr11xx_driver/src/lr11xx_wifi.c
-        app_subGHz_config_lr11xx.c
+        # app_subGHz_config_lr11xx.c
     )
+
+    if(${BOARD} STREQUAL "wio_tracker_1110")
+        message("use app_subGHz_config_lr11xx_wio_tracker.c")
+        zephyr_library_sources(app_subGHz_config_lr11xx_wio_tracker.c)
+    elseif(${BOARD} STREQUAL "nrf52840_wm1110")
+        message("use app_subGHz_config_lr11xx_nrf52840_wm1110.c")
+        zephyr_library_sources(app_subGHz_config_lr11xx_nrf52840_wm1110.c)
+    elseif(${BOARD} STREQUAL "wio_wm1110")
+        message("use app_subGHz_config_lr11xx_wio_wm1110.c")
+        zephyr_library_sources(app_subGHz_config_lr11xx_wio_wm1110.c)
+    else()
+    message("use app_subGHz_config_lr11xx.c")
+        zephyr_library_sources(app_subGHz_config_lr11xx.c)
+    endif()
+
     zephyr_include_directories(
         lr11xx_driver/src
     )

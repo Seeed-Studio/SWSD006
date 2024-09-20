@@ -65,3 +65,4 @@
 &usbd {
 	status = "disabled";
 };
+

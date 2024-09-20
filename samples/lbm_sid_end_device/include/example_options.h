@@ -61,22 +61,100 @@ extern "C" {
  * deveui 3BBE1562BCD35D32
  *	key 195029CB37A463742D063AF660281139
  */
-#define USER_LORAWAN_DEVICE_EUI						\
-	{												  \
-		0x3B, 0xBE, 0x15, 0x62, 0xBC, 0xD3, 0x5D, 0x32 \
-	}
-#define USER_LORAWAN_JOIN_EUI						  \
-	{												  \
-		0x97, 0x74, 0x27, 0x79, 0x21, 0x2C, 0x2B, 0xB6 \
-	}
-#define USER_LORAWAN_GEN_APP_KEY																	   \
-	{																								  \
-		0x19, 0x50, 0x29, 0xCB, 0x37, 0xA4, 0x63, 0x74, 0x2D, 0x06, 0x3A, 0xF6, 0x60, 0x28, 0x11, 0x39 \
-	}
-#define USER_LORAWAN_APP_KEY																		   \
-	{																								  \
-		0x19, 0x50, 0x29, 0xCB, 0x37, 0xA4, 0x63, 0x74, 0x2D, 0x06, 0x3A, 0xF6, 0x60, 0x28, 0x11, 0x39 \
-	}
+// #define USER_LORAWAN_DEVICE_EUI						\
+// 	{												  \
+// 		0x3B, 0xBE, 0x15, 0x62, 0xBC, 0xD3, 0x5D, 0x32 \
+// 	}
+// #define USER_LORAWAN_JOIN_EUI						  \
+// 	{												  \
+// 		0x97, 0x74, 0x27, 0x79, 0x21, 0x2C, 0x2B, 0xB6 \
+// 	}
+// #define USER_LORAWAN_GEN_APP_KEY																	   \
+// 	{																								  \
+// 		0x19, 0x50, 0x29, 0xCB, 0x37, 0xA4, 0x63, 0x74, 0x2D, 0x06, 0x3A, 0xF6, 0x60, 0x28, 0x11, 0x39 \
+// 	}
+// #define USER_LORAWAN_APP_KEY																		   \
+// 	{																								  \
+// 		0x19, 0x50, 0x29, 0xCB, 0x37, 0xA4, 0x63, 0x74, 0x2D, 0x06, 0x3A, 0xF6, 0x60, 0x28, 0x11, 0x39 \
+// 	}
+
+
+#define DEMO_TEST_003 // EmbeddedWorldTrackerDemo-001
+// #define DEMO_TEST_002 // EmbeddedWorldTrackerDemo-002
+// #define DEMO_TEST_003 // EmbeddedWorldTrackerDemo-003
+// #define DEMO_TEST_004 // EmbeddedWorldTrackerDemo-004
+// #define DEMO_TEST_005 // EmbeddedWorldTrackerDemo-005
+// #define DEMO_TEST_006 // EmbeddedWorldTrackerDemo-006
+// #define DEMO_TEST_007 // EmbeddedWorldTrackerDemo-007
+// #define DEMO_TEST_008 // EmbeddedWorldTrackerDemo-008
+// #define DEMO_TEST_009 // EmbeddedWorldTrackerDemo-009
+
+#if defined( DEMO_TEST_001 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x17 \
+    }
+#elif defined( DEMO_TEST_002 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x02 \
+    }
+#elif defined( DEMO_TEST_003 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x03 \
+    }
+#elif defined( DEMO_TEST_004 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x04 \
+    }
+#elif defined( DEMO_TEST_005 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x05 \
+    }
+#elif defined( DEMO_TEST_006 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x06 \
+    }
+#elif defined( DEMO_TEST_007 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x07 \
+    }
+#elif defined( DEMO_TEST_008 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x08 \
+    }
+#elif defined( DEMO_TEST_009 )
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x70, 0xB3, 0xD5, 0x7E, 0xD0, 0x05, 0x04, 0x09 \
+    }
+#else
+#define USER_LORAWAN_DEVICE_EUI                        \
+    {                                                  \
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 \
+    }
+#endif
+
+#define USER_LORAWAN_JOIN_EUI                          \
+    {                                                  \
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 \
+    }
+
+#define USER_LORAWAN_GEN_APP_KEY                                                                       \
+    {                                                                                                  \
+        0xEC, 0x6B, 0x10, 0x47, 0xB7, 0x6B, 0x2C, 0x3C, 0x92, 0xCF, 0x9A, 0x12, 0x8A, 0x5C, 0xCF, 0xEB \
+    }
+
+#define USER_LORAWAN_APP_KEY                                                                           \
+    {                                                                                                  \
+        0xEC, 0x6B, 0x10, 0x47, 0xB7, 0x6B, 0x2C, 0x3C, 0x92, 0xCF, 0x9A, 0x12, 0x8A, 0x5C, 0xCF, 0xEB \
+    }
 
 /**
  * @brief Modem Region define

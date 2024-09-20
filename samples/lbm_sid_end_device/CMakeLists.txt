@@ -29,7 +29,13 @@ find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 project(sidewalk_sid_end_device)
 
 # Source files
-target_include_directories(app PRIVATE include)
+# target_include_directories(app PRIVATE include)
+target_include_directories(app PRIVATE 
+    include
+    ../../../sidewalk/subsys/sal/common 
+)
+
+
 target_sources(app PRIVATE
     src/main.c
     src/sidewalk.c

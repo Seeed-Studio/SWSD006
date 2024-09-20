@@ -1,0 +1,249 @@
+/*
+ * Copyright (c) 2017 Linaro Limited
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/led/led.h>
+#include "wio_wm1110-pinctrl.dtsi"
+#include <zephyr/dt-bindings/i2c/i2c.h>
+
+/ {
+	model = "Seeed Wio Wm1110";
+	compatible = "seeed,wio-wm1110";
+
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+		zephyr,uart-mcumgr = &uart0;
+		zephyr,bt-mon-uart = &uart0;
+		zephyr,bt-c2h-uart = &uart0;
+		zephyr,sram = &sram0;
+		zephyr,flash = &flash0;
+		zephyr,code-partition = &slot0_partition;
+		zephyr,ieee802154 = &ieee802154;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		led0: led_0 {
+			gpios = <&gpio0 13 GPIO_ACTIVE_LOW>;
+			label = "Green LED";
+		};
+		led1: led_1 {
+			gpios = <&gpio0 14 GPIO_ACTIVE_LOW>;
+			label = "Red LED";
+		};
+		/* The led `GROVE` is not controlled by MCU, 
+		it's on when the power for Grove connectors are gated on via P1.01. */
+	};
+	
+	pwmleds {
+		 compatible = "pwm-leds";
+		 pwm_led0: pwm_led_0 {
+			 pwms = <&pwm0 0 PWM_MSEC(20) PWM_POLARITY_INVERTED>;
+		 };
+	 };
+	
+	power {
+		 compatible = "gpio-leds";
+		 gpio_sensor_pwr: gpio_sensor_pwr_0 {
+			 gpios = <&gpio0 7 GPIO_ACTIVE_HIGH>;
+			 label = "Sensor power gpio";
+		 };
+	};
+
+	buttons {
+		compatible = "gpio-keys";
+		button0: button_0 {
+			gpios = <&gpio0 23 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
+			label = "Push button switch 0";
+		};
+	};
+
+	semtech_gpios {
+		compatible = "gpio-keys";
+		semtech_sx1262_cs: cs {
+			gpios = <&gpio1 12 GPIO_ACTIVE_LOW>;
+			label = "semtech_sx1262 CS";
+		};
+		semtech_sx1262_reset_gpios: reset {
+			gpios = <&gpio1 10 GPIO_ACTIVE_LOW>;
+			label = "semtech_sx1262 Reset";
+		};
+		semtech_sx1262_busy_gpios: busy {
+			gpios = <&gpio1 11 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 Busy";
+		};
+		/*semtech_sx1262_antenna_enable_gpios: antena_enable {
+			gpios = <&gpio1 0xa GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 Antena Enable";
+		};*/
+		semtech_sx1262_dio1_gpios: dio1 {
+			gpios = <&gpio1 8 GPIO_ACTIVE_HIGH>;
+			label = "semtech_sx1262 DIO1";
+		};
+		radio_gnss_lna: gnss_lna {
+			gpios = <&gpio1 5 GPIO_ACTIVE_HIGH>;
+			label = "gnss lna enable";
+		};
+	};
+
+	/* These aliases are provided for compatibility with samples */
+	aliases {
+		led0 = &led0;
+		pwm-led0 = &pwm_led0;
+		sw0 = &button0;
+		button0 = &button0;
+		watchdog0 = &wdt0;
+		accel0 = &lis3dh;
+		bootloader-led0 = &led0;
+		mcuboot-button0 = &button0;
+		mcuboot-led0 = &led0;
+		sensor-pwr = &gpio_sensor_pwr;
+	};
+};
+
+&adc {
+	status = "okay";
+};
+
+&gpiote {
+	status = "okay";
+};
+
+&gpio0 {
+	status = "okay";
+};
+
+&gpio1 {
+	status = "okay";
+};
+
+debug_uart: &uart0 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&uart0_default>;
+	pinctrl-1 = <&uart0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+grove_uart: &uart1 {
+	compatible = "nordic,nrf-uarte";
+	status = "okay";
+	current-speed = <9600>;
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-1 = <&uart1_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+grove_i2c: &i2c1 {
+	compatible = "nordic,nrf-twim";
+	status = "okay";
+	pinctrl-0 = <&i2c1_default>;
+	pinctrl-1 = <&i2c1_sleep>;
+	pinctrl-names = "default", "sleep";
+	clock-frequency = <I2C_BITRATE_FAST>;
+
+	sht41: sht4x@44 {
+		compatible = "sensirion,sht4x";
+		reg = <0x44>;
+		repeatability = <2>;	/* 2 = high -> 8.2 ms */
+		vin-supply = < &gpio_sensor_pwr >;
+	};
+
+	lis3dh: lis3dh@19 {
+		compatible = "st,lis3dh", "st,lis2dh";
+		reg = <0x19>;
+		irq-gpios = <&gpio0 11 GPIO_ACTIVE_HIGH>,	
+				<&gpio0 12 GPIO_ACTIVE_HIGH>;		
+		// anym-on-int1;
+		// disconnect-sdo-sa0-pull-up;
+		vin-supply = < &gpio_sensor_pwr >;
+	};
+};
+
+&pwm0 {
+	/* assigned to one of the trace pins temporarily */
+	status = "okay";
+	pinctrl-0 = <&pwm0_default>;
+	pinctrl-1 = <&pwm0_sleep>;
+	pinctrl-names = "default", "sleep";
+};
+
+sid_semtech: &spi0 {
+	/* inside the WM1110 module */
+	compatible = "nordic,nrf-spi";
+	status = "okay";
+	pinctrl-0 = <&spi0_default>;
+	pinctrl-1 = <&spi0_sleep>;
+	pinctrl-names = "default", "sleep";
+	clock-frequency = <DT_FREQ_M(8)>;
+};
+
+&ieee802154 {
+	status = "okay";
+};
+
+ &flash0 {
+ 
+	 partitions {
+		 compatible = "fixed-partitions";
+		 #address-cells = <1>;
+		 #size-cells = <1>;
+ 
+		 boot_partition: partition@0 {
+			 label = "mcuboot";
+			 reg = <0x00000000 0x0001b000>;
+		 };
+		 slot0_partition: partition@1b000 {
+			 label = "image-0";
+			 reg = <0x0001b000 0x00068000>;
+		 };
+		 slot1_partition: partition@83000 {
+			 label = "image-1";
+			 reg = <0x00083000 0x00068000>;
+		 };
+ 
+		 /*
+		  * The flash starting at 0x000f8000 and ending at
+		  * 0x000fffff is reserved for use by the application.
+		  */
+ 
+		 /*
+		  * Storage partition will be used by FCB/LittleFS/NVS
+		  * if enabled.
+		  */
+		reserved0_partition: partition@eb000 {
+			label = "reserved0_partition";
+			reg = <0x000eb000 0x0001000>;
+		};
+		settings_storage: partition@ec000 {
+			 label = "settings_storage";
+			 reg = <0x000ec000 0x00004000>;
+		};
+		littlefs_storage: partition@f0000 {
+			label = "littlefs_storage";
+			reg = <0x000f0000 0x00009000>;
+	    };		
+	    sidewalk_storage: partition@f9000 {
+			label = "sidewalk_storage";
+			reg = <0x000f9000 0x00006000>;
+		};
+		mfg_storage: partition@ff000 {
+			label = "mfg_storage";
+			reg = <0x000ff000 0x00001000>;
+		};
+
+	 };
+ };
+ 
+
+zephyr_udc0: &usbd {
+	compatible = "nordic,nrf-usbd";
+	status = "disabled";
+};
