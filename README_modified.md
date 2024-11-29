@@ -34,7 +34,7 @@ command:
 ```shell
 # when doing this from bash terminal started from nordic's toolchain manager, unset ZEPHYR_BASE
 # initialize my-workspace, where 'my-workspace" can be a directory name of your choice
-west init -m https://github.com/Seeed-Studio/SWSD006 --mr Wenzy/dev my-workspace
+west init -m https://github.com/Seeed-Studio/SWSD006 --mr master my-workspace
 
 # update nRF Connect SDK modules
 cd my-workspace
