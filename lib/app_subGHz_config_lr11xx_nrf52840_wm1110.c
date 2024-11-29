@@ -133,8 +133,10 @@ static radio_lr11xx_device_config_t radio_lr11xx_cfg =
 #if defined(CONFIG_RADIO_TCXO)
 	.tcxo_config = {
 		.ctrl = LR11XX_TCXO_CTRL_DIO3,
-		.tune = LR11XX_SYSTEM_TCXO_CTRL_1_8V,
-		.timeout = 164 // 20 //200
+		// .tune = LR11XX_SYSTEM_TCXO_CTRL_1_8V,
+		// .timeout = 164 // 20 //200
+		.tune = LR11XX_SYSTEM_TCXO_CTRL_3_3V,
+		.timeout = 10 // 20 //200		
 	},
 #else
 	.tcxo_config = {

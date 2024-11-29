@@ -96,7 +96,7 @@ static void modem_event_callback( void )
             /* Set GNSS and Wi-Fi send mode */
             //smtc_modem_store_and_forward_flash_clear_data( stack_id );
             //smtc_modem_store_and_forward_set_state( stack_id, SMTC_MODEM_STORE_AND_FORWARD_ENABLE );
-            smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD );
+            smtc_modem_gnss_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );      // SMTC_MODEM_SEND_MODE_UPLINK SMTC_MODEM_SEND_MODE_STORE_AND_FORWARD
             smtc_modem_wifi_send_mode( stack_id, SMTC_MODEM_SEND_MODE_UPLINK );
             /* Program Wi-Fi scan */
             smtc_modem_wifi_scan( stack_id, 0 );

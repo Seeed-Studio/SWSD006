@@ -789,7 +789,7 @@ uint32_t smtc_modem_hal_get_radio_tcxo_startup_delay_ms(void)
 	if (cfg->tcxo_config.ctrl == LR11XX_TCXO_CTRL_NONE)
 		return 0;
 	else
-		return 2;
+		return 5;
 #else
    return 0;
 #endif
