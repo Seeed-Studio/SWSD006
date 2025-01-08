@@ -333,22 +333,22 @@ void smtc_modem_hal_stop_timer(void)
  */
 void smtc_modem_hal_disable_modem_irq(void)
 {
-#ifndef SMTC_MODEM_HAL_IRQ_FROM_SID_PAL
-	sid_error_t err;
-	LOG_DBG("Disable DIO1 IRQ.");
+// #ifndef SMTC_MODEM_HAL_IRQ_FROM_SID_PAL
+// 	sid_error_t err;
+// 	LOG_DBG("Disable DIO1 IRQ.");
 
-#ifdef LR11XX
-	const radio_lr11xx_device_config_t *cfg = get_radio_cfg();
-	if ((err = sid_pal_gpio_irq_disable(cfg->gpios.int1)) != SID_ERROR_NONE) {
-		LOG_ERR("%d = sid_pal_gpio_irq_disable()", err);
-	}
-#else
-	const radio_sx126x_device_config_t *cfg = get_radio_cfg();
-	sid_pal_gpio_irq_disable(cfg->gpio_int1);
-#endif
+// #ifdef LR11XX
+// 	const radio_lr11xx_device_config_t *cfg = get_radio_cfg();
+// 	if ((err = sid_pal_gpio_irq_disable(cfg->gpios.int1)) != SID_ERROR_NONE) {
+// 		LOG_ERR("%d = sid_pal_gpio_irq_disable()", err);
+// 	}
+// #else
+// 	const radio_sx126x_device_config_t *cfg = get_radio_cfg();
+// 	sid_pal_gpio_irq_disable(cfg->gpio_int1);
+// #endif
 
-#endif /* !SMTC_MODEM_HAL_IRQ_FROM_SID_PAL */
-	halTimerIrqEnabled = false;
+// #endif /* !SMTC_MODEM_HAL_IRQ_FROM_SID_PAL */
+// 	halTimerIrqEnabled = false;
 }
 
 /**
@@ -356,23 +356,23 @@ void smtc_modem_hal_disable_modem_irq(void)
  */
 void smtc_modem_hal_enable_modem_irq(void)
 {
-#ifndef SMTC_MODEM_HAL_IRQ_FROM_SID_PAL
-	LOG_DBG("Enable DIO1 IRQ.");
+// #ifndef SMTC_MODEM_HAL_IRQ_FROM_SID_PAL
+// 	LOG_DBG("Enable DIO1 IRQ.");
 
-#ifdef LR11XX
-	const radio_lr11xx_device_config_t *cfg = get_radio_cfg();
-	sid_pal_gpio_irq_enable(cfg->gpios.int1);
-#else
-	const radio_sx126x_device_config_t *cfg = get_radio_cfg();
-	sid_pal_gpio_irq_enable(cfg->gpio_int1);
-#endif
+// #ifdef LR11XX
+// 	const radio_lr11xx_device_config_t *cfg = get_radio_cfg();
+// 	sid_pal_gpio_irq_enable(cfg->gpios.int1);
+// #else
+// 	const radio_sx126x_device_config_t *cfg = get_radio_cfg();
+// 	sid_pal_gpio_irq_enable(cfg->gpio_int1);
+// #endif
 
-#endif /* !SMTC_MODEM_HAL_IRQ_FROM_SID_PAL */
-	halTimerIrqEnabled = true;
-	if (halTimerIrqPending) {
-		k_work_submit(&halTimerWorkItem);
-		halTimerIrqPending = false;
-	}
+// #endif /* !SMTC_MODEM_HAL_IRQ_FROM_SID_PAL */
+// 	halTimerIrqEnabled = true;
+// 	if (halTimerIrqPending) {
+// 		k_work_submit(&halTimerWorkItem);
+// 		halTimerIrqPending = false;
+// 	}
 }
 
 /* ------------ Context saving management ------------*/
